@@ -1,7 +1,13 @@
 var color = $(".selected").css("background-color");
-var $controlsList = $(".controls li");
+var $canvas = $("canvas");
+var context = $canvas[0].getContext("2d");
+var lastEvent;
+var mouseDown = false;
 
-$controlsList.click(function(){
+//In addition to their ability to handle events on descendant elements not yet created, another advantage
+// of delegated events is their potential for much lower overhead when many elements must be monitored.
+
+$(".controls").on("click", "li", function(){
 
   // deselect sibling elements
   $(this).siblings().removeClass("selected");
@@ -40,5 +46,24 @@ $("#addNewColor").click(function(){
 
   // actually triggering the click even here
   $newColor.click();
-
 });
+
+$canvas.mousedown(function(e){
+  lastEvent = e;
+  mouseDown = true;
+}).mousemove(function(e) {
+
+  if(mouseDown) {
+    context.beginPath();
+    context.moveTo(lastEvent.offsetX, lastEvent.offsetY);
+    context.lineTo(e.offsetX, e.offsetY);
+    context.strokeStyle = color;
+    context.stroke();
+    lastEvent = e;
+  }
+}).mouseup(function(){
+  mouseDown = false;
+}).mouseleave(function(){
+  $canvas.mouseup();
+});
+
