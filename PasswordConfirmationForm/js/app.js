@@ -1,11 +1,30 @@
 var $form = $("form");
+
+// Hide hints
 $form.find("span").hide();
 
 var $password = $("#password");
 var $confirmPassword = $("#confirm_password");
+var $username = $("#username");
+
+function isPasswordValid() {
+  return $password.val().length > 8;
+}
+
+function arePasswordsMatching() {
+  return $password.val() === $confirmPassword.val();
+}
+
+function isUsernamePresent() {
+  return $username.val().length > 0;
+}
+
+function canSubmit() {
+  return isPasswordValid() && arePasswordsMatching() && isUsernamePresent();
+}
 
 function passwordEvent() {
-  if ($password.val().length > 8) {
+  if (isPasswordValid()) {
     $password.next().hide();
   }
   else {
@@ -14,7 +33,7 @@ function passwordEvent() {
 }
 
 function confirmPasswordEvent() {
-  if ($password.val() === $confirmPassword.val()) {
+  if (arePasswordsMatching()) {
     $confirmPassword.next().hide();
   }
   else {
@@ -22,6 +41,17 @@ function confirmPasswordEvent() {
   }
 }
 
-$password.focus(passwordEvent).keyup(passwordEvent).focus(confirmPasswordEvent).keyup(confirmPasswordEvent);
+function enablesSubmitEvent() {
+  $("#submit").prop("disabled", !canSubmit());
+}
 
-$confirmPassword.focus(confirmPasswordEvent).keyup(confirmPasswordEvent);
+$username.focus(enablesSubmitEvent).keyup(enablesSubmitEvent);
+
+$password.focus(passwordEvent).keyup(passwordEvent).focus(confirmPasswordEvent)
+                              .keyup(confirmPasswordEvent)
+                              .keyup(enablesSubmitEvent);
+
+$confirmPassword.focus(confirmPasswordEvent).keyup(confirmPasswordEvent)
+                .keyup(enablesSubmitEvent);
+
+enablesSubmitEvent();
