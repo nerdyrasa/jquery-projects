@@ -9,14 +9,14 @@
         <!--CSS-->
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/normalize.min.css">
-        
+        <link rel="stylesheet" href="js/animsition/animsition.min.css"/>
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-      <div class="row container">
+      <div class="row container animsition">
         <header class="row header">
           <div class="grid-third">
-            <a href="index.html" class="logo"></a>
+            <a href="index.html" class="logo animsition-link"></a>
           </div>
           <div class="grid-third">
             <h1 class="description">We build apps</h1>
@@ -24,8 +24,8 @@
           <div class="grid-third">
             <nav>
               <a href="#" class="active">Home</a>
-              <a href="work.html">Work</a>
-              <a href="team.html">Team</a>
+              <a href="work.html" class="animsition-link">Work</a>
+              <a href="team.html" class="animsition-link">Team</a>
             </nav>
           </div>
       </header><!--/header-->
@@ -66,6 +66,8 @@
           </div>
         </footer><!--/footer-->
         </div>
-        
+      <script src="js/jquery-1.11.2.min.js"></script>
+      <script src="js/animsition/jquery.animsition.min.js"></script>
+      <script src="js/main.js"></script>
     </body>
 </html>
